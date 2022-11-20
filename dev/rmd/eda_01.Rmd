@@ -20,6 +20,7 @@ library(dplyr)
 library(janitor)
 library(ggplot2)
 library(forcats)
+library(echarts4r)
 
 
 ```
@@ -72,6 +73,21 @@ count_ship_mode %>%
   
 
 ```
+
+
+```{r}
+
+
+count_ship_mode |> 
+  e_charts(ship_mode) |> 
+  e_pie(count, radius = c("50%", "70%")) |> 
+  e_title("Shipping Mode", left = "center") %>% 
+  e_legend(bottom = 0)
+
+
+```
+
+
 
 ### segment
 

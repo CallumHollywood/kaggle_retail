@@ -7,8 +7,8 @@
 #' @noRd
 
 
-superstore <- read_csv('inst/app/data/SampleSuperstore.csv') %>%
-  clean_names()
+superstore <- janitor::clean_names(readr::read_csv('inst/app/data/SampleSuperstore.csv'))
+
 
 app_server <- function(input, output, session) {
 
@@ -52,22 +52,7 @@ app_server <- function(input, output, session) {
   #### <<<<    OUTPUTS         >>>>  ####
   #-------------------------------------#
 
-  output$plot <- renderEcharts4r({
 
-    superstore %>%
-      group_by(state) %>%
-      transmute(quantity = sum(quantity)) %>%
-      ungroup() %>%
-      distinct() %>%
-      arrange(desc(quantity)) %>%
-      slice(1:10) %>%
-      rename(states = state) %>%
-      e_charts(states) %>%
-      e_map_register("USA", json) %>%
-      e_map(quantity , map = "USA") %>%
-      e_visual_map(quantity )
-
-  })
 
 
 

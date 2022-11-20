@@ -13,3 +13,7 @@
 .aboutdescription a {
   color: white;
 }
+
+.centerup {
+  align-items: center;
+}

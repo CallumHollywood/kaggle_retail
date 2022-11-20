@@ -11,7 +11,11 @@ app_ui <- function(request) {
     golem_add_external_resources(),
     dashboardPage(
       header = dashboardHeader(
-        title = h2(tags$u('Retail Analytics', style = 'color: white;'))
+        title = tagList(
+          div(class = 'centerup',
+                h2(tags$u('Retail Analytics', style = 'color: white;'))
+              )
+        )
       ),
       sidebar = dashboardSidebar(
         div(class = 'sidebar',
