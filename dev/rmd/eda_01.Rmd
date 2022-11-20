@@ -1,0 +1,150 @@
+---
+title: "eda_01"
+output: html_document
+date: "2022-11-20"
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = "C:/nexus/sklldev/kaggle/dashboards/kaggle_retail")
+
+```
+
+
+```{r}
+
+library(readr)
+library(skimr)
+library(dplyr)
+library(janitor)
+library(ggplot2)
+library(forcats)
+
+
+```
+
+
+
+```{r}
+
+superstore <- read_csv('inst/app/data/SampleSuperstore.csv') %>% 
+  clean_names()
+
+
+```
+
+
+```{r}
+
+skim(superstore)
+
+
+```
+
+
+
+```{r}
+
+head(superstore)
+
+```
+
+
+
+### Ship Mode
+
+```{r}
+
+count_ship_mode <- superstore %>% 
+  select(ship_mode) %>% 
+  group_by(ship_mode) %>%
+  mutate(count = n()) %>% 
+  ungroup() %>% 
+  distinct()
+
+count_ship_mode
+
+count_ship_mode %>% 
+  mutate(ship_mode = fct_reorder(ship_mode, desc(count))) %>%
+  ggplot(aes(ship_mode, count)) +
+  geom_col()
+  
+
+```
+
+### segment
+
+```{r}
+
+count_segment <- superstore %>% 
+  select(segment) %>% 
+  group_by(segment) %>%
+  mutate(count = n()) %>% 
+  ungroup() %>% 
+  distinct()
+
+count_segment
+
+count_segment %>% 
+  mutate(segment = fct_reorder(segment, desc(count))) %>%
+  ggplot(aes(segment, count)) +
+  geom_col()
+  
+
+
+```
+
+
+### state
+
+```{r, fig.height=10}
+
+count_state <- superstore %>% 
+  select(state) %>% 
+  group_by(state) %>%
+  mutate(count = n()) %>% 
+  ungroup() %>% 
+  distinct()
+
+count_state
+
+count_state %>% 
+  mutate(state = fct_reorder(state, count)) %>%
+  ggplot(aes(state, count)) +
+  geom_col() +
+  theme(
+    axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)
+  ) +
+  coord_flip()
+
+
+```
+
+
+### category
+
+```{r}
+
+count_category <- superstore %>% 
+  select(category) %>% 
+  group_by(category) %>%
+  mutate(count = n()) %>% 
+  ungroup() %>% 
+  distinct()
+
+count_category
+
+count_category %>% 
+  mutate(category = fct_reorder(category, count)) %>%
+  ggplot(aes(category, count)) +
+  geom_col() 
+
+
+```
+
+
+
+
+
+

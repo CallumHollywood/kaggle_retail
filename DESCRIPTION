@@ -1,17 +1,14 @@
-Package: blank
-Title: An Amazing Shiny App
+Package: retailanalytics
+Title: Retail Analytics
 Version: 0.0.0.9000
-Authors@R: 
-    person(given = "firstname",
-           family = "lastname",
-           role = c("aut", "cre"),
-           email = "your@email.com")
-Description: What the package does (one paragraph).
+Authors@R: person('Callum', 'Hollywood', email = 'callumhollywood@gmail.com', role = c('cre', 'aut'))
+Description: Portfolio dashboard of the Kaggle 'Retail Supermarket' dataset (https://www.kaggle.com/datasets/roopacalistus/superstore).
 License: What license is it under?
 Imports: 
     bs4Dash,
     config (>= 0.3.1),
     golem (>= 0.3.5),
+    magrittr,
     shiny (>= 1.7.3)
 Encoding: UTF-8
 LazyData: true

@@ -19,12 +19,12 @@
 ## to change the name in the app_sys() function in app_config.R /!\
 ##
 golem::fill_desc(
-  pkg_name = "blank", # The Name of the package containing the App
-  pkg_title = "PKG_TITLE", # The Title of the package containing the App
-  pkg_description = "PKG_DESC.", # The Description of the package containing the App
-  author_first_name = "AUTHOR_FIRST", # Your First Name
-  author_last_name = "AUTHOR_LAST", # Your Last Name
-  author_email = "AUTHOR@MAIL.COM", # Your Email
+  pkg_name = "retailanalytics", # The Name of the package containing the App
+  pkg_title = "Retail Analytics", # The Title of the package containing the App
+  pkg_description = "Portfolio dashboard of the Kaggle 'Retail Supermarket' dataset (https://www.kaggle.com/datasets/roopacalistus/superstore).", # The Description of the package containing the App
+  author_first_name = "Callum", # Your First Name
+  author_last_name = "Hollywood", # Your Last Name
+  author_email = "callumhollywood@gmail.com", # Your Email
   repo_url = NULL # The URL of the GitHub Repo (optional)
 )
 

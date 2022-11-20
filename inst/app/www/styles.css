@@ -2,3 +2,14 @@
 .sidebar h3{
   color: white;
 }
+
+
+.aboutdescription {
+  background-color: #91959c;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.aboutdescription a {
+  color: white;
+}
