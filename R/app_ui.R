@@ -3,23 +3,40 @@
 #' @param request Internal parameter for `{shiny}`.
 #'     DO NOT REMOVE.
 #' @import shiny
+#' @import bs4Dash
 #' @noRd
 app_ui <- function(request) {
   tagList(
     # Leave this function for adding external resources
     golem_add_external_resources(),
-    # Your application UI logic
-    fluidPage(
-      h1("blank")
+    dashboardPage(
+      header = dashboardHeader(
+        title = h2(tags$u('Retail Analytics', style = 'color: white;'))
+      ),
+      sidebar = dashboardSidebar(
+
+        div(class = 'sidebar',
+        h3('stuff'),
+        sidebarMenu(
+          menuItem(
+            text = "Item 1"
+          ),
+          menuItem(
+            text = "Item 2"
+          )
+        )
+            )
+
+      ),
+      body = dashboardBody(
+
+      ),
     )
   )
 }
 
-#' Add external Resources to the Application
-#'
-#' This function is internally used to add external
-#' resources inside the Shiny application.
-#'
+
+
 #' @import shiny
 #' @importFrom golem add_resource_path activate_js favicon bundle_resources
 #' @noRd
