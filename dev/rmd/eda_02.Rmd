@@ -1,0 +1,52 @@
+---
+title: "Untitled"
+output: html_document
+date: "2022-11-21"
+---
+
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = "C:/nexus/sklldev/kaggle/dashboards/kaggle_retail")
+
+```
+
+
+
+
+```{r}
+
+library(readr)
+library(skimr)
+library(dplyr)
+library(janitor)
+library(ggplot2)
+library(forcats)
+library(echarts4r)
+library(tidyr)
+library(reactable)
+
+```
+
+
+
+```{r}
+superstore <- read_csv('inst/app/data/SampleSuperstore.csv') %>% 
+  clean_names()
+```
+
+# quantity by state
+
+
+```{r}
+
+superstore %>% 
+  filter(state == 'Kentucky') %>% 
+  summarise(quantity = sum(quantity)) %>% 
+  pull(quantity)
+
+
+
+```
+

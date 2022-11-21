@@ -14,6 +14,7 @@ Imports:
     reactable,
     readr,
     shiny (>= 1.7.3),
+    shinyWidgets,
     tidyr
 Encoding: UTF-8
 LazyData: true
