@@ -1,0 +1,11 @@
+name: kaggle_retail
+title:
+username:
+account: callumh
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 7690290
+bundleId: 6537506
+url: https://callumh.shinyapps.io/kaggle_retail/
+when: 1669017292.34699
+lastSyncTime: 1669017292.347

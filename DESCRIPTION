@@ -3,14 +3,17 @@ Title: Retail Analytics
 Version: 0.0.0.9000
 Authors@R: person('Callum', 'Hollywood', email = 'callumhollywood@gmail.com', role = c('cre', 'aut'))
 Description: Portfolio dashboard of the Kaggle 'Retail Supermarket' dataset (https://www.kaggle.com/datasets/roopacalistus/superstore).
-License: What license is it under?
+License: MIT + file LICENSE
 Imports: 
     bs4Dash,
     config (>= 0.3.1),
     dplyr,
+    echarts4r,
     golem (>= 0.3.5),
     janitor,
+    jsonlite,
     magrittr,
+    pkgload,
     reactable,
     readr,
     shiny (>= 1.7.3),
