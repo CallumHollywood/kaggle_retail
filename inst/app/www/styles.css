@@ -17,3 +17,9 @@
 .centerup {
   align-items: center;
 }
+
+.regional_profit_toprow {
+  background-color: #91959c;
+  padding: 10px;
+  border-radius: 10px;
+}

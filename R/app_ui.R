@@ -45,7 +45,7 @@ app_ui <- function(request) {
           ),
           tabItem(
             tabName = "item_2",
-            h1("Overview")
+            mod_overview_ui("overview_1")
           ),
           tabItem(
             tabName = "item_3",

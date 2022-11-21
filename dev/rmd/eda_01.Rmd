@@ -21,7 +21,7 @@ library(janitor)
 library(ggplot2)
 library(forcats)
 library(echarts4r)
-
+library(tidyr)
 
 ```
 
@@ -70,7 +70,7 @@ count_ship_mode %>%
   mutate(ship_mode = fct_reorder(ship_mode, desc(count))) %>%
   ggplot(aes(ship_mode, count)) +
   geom_col()
-  
+
 
 ```
 
@@ -106,7 +106,7 @@ count_segment %>%
   mutate(segment = fct_reorder(segment, desc(count))) %>%
   ggplot(aes(segment, count)) +
   geom_col()
-  
+
 
 
 ```
@@ -160,7 +160,415 @@ count_category %>%
 ```
 
 
+### Regional profit
+
+```{r}
+
+regional_profit <- superstore %>% 
+  group_by(region) %>% 
+  summarise(total_profit = sum(profit))
+
+regional_profit
+
+```
+
+
+```{r}
+
+library(reactable)
+
+reactable(regional_profit)
+
+regional_profit %>% 
+  arrange(desc(total_profit)) %>% 
+  mutate(total_profit = round(total_profit, 0)) %>% 
+  rename(
+    `Region` = region,
+    `Total Profit ($)` = total_profit
+  ) %>% 
+  reactable()
+
+
+```
 
 
 
+
+```{r}
+
+regional_profit <- superstore %>% 
+  group_by(region, category) %>% 
+  summarise(total_profit = sum(profit))
+
+regional_profit
+
+```
+
+
+
+```{r}
+
+regional_profit %>% 
+  arrange(total_profit, category) %>% 
+  mutate(total_profit = round(total_profit, 0)) %>% 
+  rename(
+    `Region` = region,
+    `Total Profit ($)` = total_profit,
+    Category = category
+  ) %>% 
+  reactable(groupBy = "Region",
+            columns = list(
+              `Total Profit ($)` = colDef(aggregate = "sum")
+            )
+  )
+
+
+```
+
+
+
+quanbity toip city
+
+```{r}
+
+
+superstore %>% 
+  group_by(city) %>% 
+  summarise(quantity = sum(quantity)) %>% 
+  arrange(desc(quantity))
+
+superstore %>% 
+  group_by(city) %>% 
+  summarise(sales = sum(sales)) %>% 
+  arrange(desc(sales))
+
+superstore %>% 
+  group_by(city) %>% 
+  summarise(profit = sum(profit)) %>% 
+  arrange(desc(profit))
+
+
+```
+
+
+```{r}
+
+sum(superstore$quantity)
+sum(superstore$sales)
+sum(superstore$profit)
+
+
+
+```
+
+
+most discounted items
+
+
+```{r}
+
+
+
+superstore %>% 
+  select(sub_category, discount) %>% 
+  mutate(discounted = ifelse(discount == 0, 'yes',	'no')) %>% 
+  group_by(sub_category, discounted) %>% 
+  summarise(count = n()) %>% 
+  pivot_wider(names_from = discounted, values_from = count) %>% 
+  rowwise() %>% 
+  mutate(total = no + yes) %>% 
+  mutate(prop_discounted = yes / total * 100) %>% 
+  ungroup() %>% 
+  arrange(desc(prop_discounted)) %>% 
+  mutate(prop_discounted = round(prop_discounted)) %>% 
+  rename(
+    `Sub Category` = sub_category,
+    `Proportion of Sub Category Discounted` = prop_discounted
+  ) %>% 
+  select(-no, -yes, -total)
+
+
+
+```
+
+
+
+ship mode by sub category
+
+
+```{r}
+
+superstore %>% 
+  select(ship_mode, sub_category) %>% 
+  group_by(sub_category, ship_mode) %>% 
+  summarise(count = n()) %>% 
+  filter(ship_mode == 	'Same Day') %>% 
+  arrange(desc(count))
+
+
+
+```
+
+
+
+```{r}
+
+superstore %>% 
+  select(ship_mode, sub_category) %>% 
+  group_by(sub_category, ship_mode) %>% 
+  summarise(count = n()) %>% 
+  pivot_wider(names_from = ship_mode, values_from = count) %>% 
+  select(sub_category, `Same Day`, `First Class`, `Second Class`, `Standard Class`)
+
+
+```
+
+
+
+```{r}
+
+ship_mode_subcat <- superstore %>% 
+  select(ship_mode, sub_category) %>% 
+  group_by(sub_category, ship_mode) %>% 
+  summarise(count = n()) %>% 
+  pivot_wider(names_from = ship_mode, values_from = count) %>% 
+  select(sub_category, `Same Day`, `First Class`, `Second Class`, `Standard Class`) %>% 
+  clean_names() %>% 
+  select(sub_category, same_day, first_class, second_class, standard_class)
+
+ship_mode_subcat
+
+```
+
+
+
+
+```{r}
+
+library(readr)
+library(skimr)
+library(dplyr)
+library(janitor)
+library(ggplot2)
+library(forcats)
+library(echarts4r)
+library(tidyr)
+library(reactable)
+
+```
+
+
+```{r}
+
+
+bar_chart <- function(label, width = "100%", height = "1rem", fill = "#00bfc4", background = NULL) {
+  
+  print(str(label))
+  
+  bar <- div(style = list(background = fill, width = width, height = height))
+  
+  # message(bar)
+  
+  chart <- div(style = list(flexGrow = 1, marginLeft = "0.5rem", background = background), bar)
+  
+  # message(chart)
+  
+  div(style = list(display = "flex", alignItems = "center"), label, chart)
+}
+
+
+
+bar_chart <- function(label, width = "100%", height = "1rem", fill = "#00bfc4", background = NULL) {
+  
+  # print(str(label))
+  
+  bar <- div(style = list(background = fill, width = width, height = height))
+  
+  # message(bar)
+  
+  chart <- div(style = list(flexGrow = 1, marginLeft = "0.5rem", background = background), bar)
+  
+  # message(chart)
+  
+  div(style = list(display = "flex", alignItems = "center"), label, chart)
+}
+
+ship_mode_subcat %>% 
+  reactable(
+    columns = list(
+      same_day = colDef(name = "same_day", align = "left", cell = function(value) {
+        width <- paste0(value / max(ship_mode_subcat$same_day) * 100, "%")
+        bar_chart(value, width = width)
+      }
+      ),
+      first_class = colDef(name = "first_class", align = "left", cell = function(value) {
+        width <- paste0(value / max(ship_mode_subcat$first_class) * 100, "%")
+        bar_chart(value, width = width, fill = "#fc5185", background = "#e1e1e1" )
+      }
+      ),
+      second_class = colDef(name = "second_class", align = "left", cell = function(value) {
+        width <- paste0(value / max(ship_mode_subcat$second_class) * 100, "%")
+        bar_chart(value, width = width, fill = "#e6b122")
+      }
+      ),
+      standard_class = colDef(name = "standard_class", align = "left", cell = function(value) {
+        width <- paste0(value / max(ship_mode_subcat$standard_class) * 100, "%")
+        bar_chart(value, width = width, fill = "#ab47bf", background = "#e1e1e1" )
+      }
+      )
+      
+      
+    )
+  )
+
+
+
+```
+
+
+
+
+
+```{r}
+
+bar_chart <- function(label, width = "100%", height = "1rem", fill = "#00bfc4", background = NULL) {
+  
+  # print(str(label))
+  
+  bar <- div(style = list(background = fill, width = width, height = height))
+  
+  # message(bar)
+  
+  chart <- div(style = list(flexGrow = 1, marginLeft = "0.5rem", background = background), bar)
+  
+  # message(chart)
+  
+  div(style = list(display = "flex", alignItems = "center"), label, chart)
+}
+
+
+ship_mode_subcat %>% 
+  select(sub_category, same_day) %>% 
+  reactable(
+    columns = list(
+      same_day = colDef(name = "same_day", align = "left", cell = function(value) {
+        # width <- paste0(value / max(ship_mode_subcat$same_day) * 100, "%")
+        width <- value / max(ship_mode_subcat$same_day) * 100
+        width <- round(width, 0)
+        
+        width <- tibble(
+          width = width
+        ) %>% 
+          mutate(n_char = nchar(width)) %>% 
+          mutate(width = case_when(
+            n_char == 1 ~ paste0('00', width),
+            n_char == 2 ~ paste0('0', width)
+            # ,
+            # T ~ width
+          )) %>% 
+          pull(width)
+        
+        
+        print(width)
+        bar_chart(value, width = width)
+        
+      }
+      )
+    )
+  )
+
+
+```
+
+
+```{r}
+
+
+ship_mode_subcat %>% 
+  select(sub_category, same_day) %>% 
+  reactable(
+    columns = list(
+      same_day = colDef(name = "same_day", align = "left", cell = function(value) {
+        # width <- paste0(value / max(ship_mode_subcat$same_day) * 100, "%")
+        width <- value / max(ship_mode_subcat$same_day) * 100
+        # width <- round(width, 0)
+        width_tbl <- tibble(
+          width = width,
+          x = 'xyz'
+        )
+        
+        width_tbl %>% 
+          ggplot(aes(x = xyz, y = width)) +
+          geom_col()
+        
+        
+        print(width_tbl)
+        # bar_chart(value, width = width)
+        
+        width_tbl
+        
+      }
+      )
+    )
+  )
+
+
+```
+
+
+```{r}
+
+bar_chart <- function(label, width = "100%", height = "1rem", fill = "#00bfc4", background = NULL) {
+  
+  bar <- div(style = list(background = fill, width = width, height = height))
+  
+  if(nchar(as.character(label)) == 1){
+    
+    marginleft <- "1.5rem"
+    
+  } else if(nchar(as.character(label)) == 2){
+    
+    marginleft <- "1rem"
+    
+  }  else if(nchar(as.character(label)) == 3){
+    
+    marginleft <- "0.5rem"
+    
+  }
+  
+  chart <- div(style = list(flexGrow = 1, marginLeft = marginleft, background = background), bar)
+  div(style = list(display = "flex", alignItems = "center"), label, chart)
+}
+
+
+ship_mode_subcat %>% 
+  reactable(
+    showSortable = TRUE,
+    columns = list(
+      same_day = colDef(name = "same_day", align = "left", cell = function(value) {
+        width <- paste0(value / max(ship_mode_subcat$same_day) * 100, "%")
+        bar_chart(value, width = width, background = "#e1e1e1")
+      }
+      ),
+      first_class = colDef(name = "first_class", align = "left", cell = function(value) {
+        width <- paste0(value / max(ship_mode_subcat$first_class) * 100, "%")
+        bar_chart(value, width = width, fill = "#fc5185", background = "#e1e1e1")
+      }
+      ),
+      second_class = colDef(name = "second_class", align = "left", cell = function(value) {
+        width <- paste0(value / max(ship_mode_subcat$first_class) * 100, "%")
+        bar_chart(value, width = width, fill = "#e6b122", background = "#e1e1e1")
+      }
+      ),
+      standard_class = colDef(name = "standard_class", align = "left", cell = function(value) {
+        width <- paste0(value / max(ship_mode_subcat$first_class) * 100, "%")
+        bar_chart(value, width = width, fill = "#ab47bf", background = "#e1e1e1")
+      }
+      )
+    )
+  )
+
+
+
+```
 

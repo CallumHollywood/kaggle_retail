@@ -107,6 +107,8 @@ mod_about_server <- function(
     #### <<<<    STATIC VALUES   >>>>  ####
     #-------------------------------------#
 
+    json <- jsonlite::read_json("https://raw.githubusercontent.com/shawnbot/topogram/master/data/us-states.geojson")
+
     count_ship_mode <- superstore %>%
       select(ship_mode) %>%
       group_by(ship_mode) %>%

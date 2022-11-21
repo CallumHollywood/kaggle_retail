@@ -23,7 +23,12 @@ app_server <- function(input, output, session) {
   mod_about_server(
     "about_1"
     , superstore
-    )
+  )
+
+  mod_overview_server(
+    "overview_1"
+    , superstore
+  )
 
   #### <<<<    STATIC VALUES   >>>>  ####
   #-------------------------------------#
