@@ -38,14 +38,33 @@ mod_state_ui <- function(id){
       box(
         id = "card4",
         title = h4("Shipping Mode"),
-        width = 3,
+        width = 4,
         status = "primary",
         closable = FALSE,
         maximizable = FALSE,
         collapsible = FALSE,
         echarts4rOutput(ns('ot_ship_mode'))
       ),
-
+      box(
+        id = "card4",
+        title = h4("Contribution to Overall Profit"),
+        width = 4,
+        status = "primary",
+        closable = FALSE,
+        maximizable = FALSE,
+        collapsible = FALSE,
+        echarts4rOutput(ns('ot_state_contrib'))
+      ),
+      box(
+        id = "card4",
+        title = h4("State Category Profile"),
+        width = 4,
+        status = "primary",
+        closable = FALSE,
+        maximizable = FALSE,
+        collapsible = FALSE,
+        echarts4rOutput(ns('ot_state_category'))
+      )
     )
   )
 }
@@ -91,6 +110,31 @@ mod_state_server <- function(
     #### <<<<   REACTIVES        >>>>  ####
     #-------------------------------------#
 
+    state_category_rctv <- reactive({
+
+      req(input$slt_state)
+
+      superstore %>%
+        filter(state == input$slt_state) %>%
+        select(category, sales) %>%
+        group_by(category) %>%
+        summarise(sales = sum(sales))
+
+    })
+
+    fks_state_contrib_rctv <- reactive({
+
+      superstore %>%
+        mutate(fks_state = ifelse(state == input$slt_state, 'fks_state', 'rest')) %>%
+        group_by(fks_state) %>%
+        summarise(sum_state = sum(profit)) %>%
+        ungroup %>%
+        pivot_wider(names_from = fks_state, values_from = sum_state) %>%
+        rowwise() %>%
+        mutate(total = fks_state + rest) %>%
+        mutate(pc_contrib = round(fks_state / total * 100, 1))
+    })
+
 
     #### <<<<   REACTIVES VALS   >>>>  ####
     #-------------------------------------#
@@ -122,6 +166,28 @@ mod_state_server <- function(
 
     #### <<<<    OUTPUTS         >>>>  ####
     #-------------------------------------#
+
+
+
+
+    output$ot_state_category <- renderEcharts4r({
+
+      state_category_rctv() |>
+        e_charts(category) |>
+        e_bar(sales, name = "sales") |>
+        e_legend(show = FALSE)
+
+    })
+
+    output$ot_state_contrib <- renderEcharts4r({
+
+      e_charts() |>
+        e_gauge(fks_state_contrib_rctv()$pc_contrib, "%")
+      # |>
+      #   e_title("Contribution to Overall Profit")
+
+    })
+
 
     output$ot_ship_mode <- renderEcharts4r({
 

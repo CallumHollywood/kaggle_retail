@@ -50,3 +50,105 @@ superstore %>%
 
 ```
 
+```{r}
+
+superstore %>% 
+  filter(state == 'Kentucky')
+
+
+```
+
+% overall profit
+
+```{r}
+
+fks_state_contrib <- superstore %>% 
+  mutate(fks_state = ifelse(state == 'Kentucky', 'fks_state', 'rest')) %>% 
+  group_by(fks_state) %>% 
+  summarise(sum_state = sum(profit)) %>% 
+  pivot_wider(names_from = fks_state, values_from = sum_state) %>% 
+  rowwise() %>% 
+  mutate(total = fks_state + rest) %>% 
+  mutate(pc_contrib = round(fks_state / total * 100, 1))
+
+fks_state_contrib
+
+
+```
+
+
+```{r}
+
+fks_state_contrib
+
+e_charts() |>
+  e_gauge(fks_state_contrib$pc_contrib, "%") |>
+  e_title("Contribution to Overall Profit")
+
+
+
+```
+
+
+
+```{r}
+
+library(readr)
+library(skimr)
+library(dplyr)
+library(janitor)
+library(ggplot2)
+library(forcats)
+library(echarts4r)
+library(tidyr)
+library(reactable)
+
+```
+
+```{r}
+
+state_category <- superstore %>% 
+  filter(state == 'Kentucky') %>% 
+  select(category, sales) %>% 
+  group_by(category) %>% 
+  summarise(sales = sum(sales))
+
+state_category
+
+```
+
+
+
+```{r}
+
+state_category |> 
+  e_charts(category) |> 
+  e_bar(sales, name = "Serie 1") |> 
+  # e_title("Bar and step charts") |>
+  e_legend(show = FALSE)
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
