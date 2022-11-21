@@ -23,6 +23,8 @@ attachment::att_amend_desc()
 # golem::add_module(name = "name_of_module1", with_test = TRUE) # Name of the module
 golem::add_module(name = "about") # Name of the module
 golem::add_module(name = "overview")
+golem::add_module(name = "state")
+
 
 ## Add helper functions ----
 ## Creates fct_* and utils_*

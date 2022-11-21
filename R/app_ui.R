@@ -49,7 +49,7 @@ app_ui <- function(request) {
           ),
           tabItem(
             tabName = "item_3",
-            h1("State")
+            mod_state_ui("state_1")
           )
         )
       )
