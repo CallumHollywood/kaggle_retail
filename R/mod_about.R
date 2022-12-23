@@ -10,7 +10,7 @@
 #' @importFrom magrittr %>%
 #' @import echarts4r
 #' @import dplyr
-
+#' @import tippy
 
 
 mod_about_ui <- function(id){
@@ -21,67 +21,127 @@ mod_about_ui <- function(id){
         fluidRow(
           column(12,
                  align = 'center',
-                 h3('Retail Dashboard'),
+                 class = 'aboutcols',
+                 div(id = ns('dv_hvr1'), h3('Retail Supermarket Dashboard', style = 'color: #ffffff')),
+                 tippy_this(
+                   ns("dv_hvr1"),
+                   HTML("<h3>Retail Supermarket Dashboard</h3>
+                        <br>
+                        <h6>Click through to the 'Dashboard Details' for data source details.</h6>
+                        "),
+                   theme = 'translucent'
+                 )
           )
         ),
         br(),
+        br(),
         fluidRow(
           column(4,
-                 column(12,
-                        div(class = 'aboutdescription',
-                            h4('About'),
-                            br(),
-                            h5('Sales details of stores of a USA supermarket chain.'),
-                            p('Data sourced from...'),
-                            div(id = 'href',
-                                tags$a(href="https://www.kaggle.com/datasets/roopacalistus/superstore",
-                                       "Kaggle - Retail Supermarket",
-                                       target = '_blank'
-                                )
-                            )
-                        )
-                 ),
-                 column(12,
-                        br(),
-                        br(),
-                        h4('Demo'),
-                        br(),
-                        h5('Nexus Data Science Portfolio Dashboards.'),
-                        h5('For business metrics with an up-to-the-minute pulse, visit...'),
-                        br(),
-                        div(
-                          tags$a(href="http://nexusdatascience.com",
-                                 "www.nexusdatascience.com",
-                                 target = '_blank'
-                          )
-                        ),
-                        br(),
-                        br(),
-                        h5('BI Dashboards that put you in control!')
+                 div(class = 'aboutdescription',
+                     h4('About'),
+                     br(),
+                     h5('Sales details of stores of a USA supermarket chain.'),
+                     p('Data sourced from...'),
+                     br(),
+                     div(id = 'href',
+                         tags$a(href="https://www.kaggle.com/datasets/roopacalistus/superstore",
+                                "Kaggle - Retail Supermarket",
+                                target = '_blank'
+                         )
+                     )
                  )
+          ),
+          column(4,
+                 div(class = 'aboutdescription',
+                     h4('Demo'),
+                     br(),
+                     h5('Take the dashboard test-drive!'),
+                     p("Click through the retail business metrics."),
+                     br(),
+                     div(
+                       tags$a(href="http://nexusdatascience.com",
+                              "www.nexusdatascience.com",
+                              target = '_blank'
+                       )
+                     )
+                     )
+          ),
+          column(4,
+                 div(class = 'aboutdescription',
+                     h4('Contact'),
+                     br(),
+                     h5('Nexus Data Science'),
+                     p('For business metrics with an up-to-the-minute pulse, visit...'),
+                     br(),
+                     div(
+                       tags$a(href="http://nexusdatascience.com",
+                              "www.nexusdatascience.com",
+                              target = '_blank'
+                       )
+                     )
+                 )
+          )
 
-          ),
-          box(
-            id = "card4",
-            title = h4("Top 10 States by Total Quantity"),
-            width = 4,
-            status = "primary",
-            closable = FALSE,
-            maximizable = FALSE,
-            collapsible = FALSE,
-            echarts4rOutput(ns('ot_state_quantity'))
-          ),
-          box(
-            id = "card4",
-            title = h4("Shipping Mode"),
-            width = 4,
-            status = "primary",
-            closable = FALSE,
-            maximizable = FALSE,
-            collapsible = FALSE,
-            echarts4rOutput(ns('ot_ship_mode'))
-          ),
+        ),
+        br(),
+        br(),
+        fluidRow(
+          column(12,
+                 align = 'center',
+                 class = 'aboutcols',
+                 style = 'height: 150px; color: #ffffff;',
+                 id = ns('col_img'),
+                 br(),
+                 h2('Nexus Data Science Portfolio Dashboards.'),
+                 br(),
+                 h5('BI Dashboards that put you in control!')
+
+          )
         )
+        # ,
+        # fluidRow(
+        #   column(4,
+        #          column(12,
+        #                 br(),
+        #                 br(),
+        #                 h4('Demo'),
+        #                 br(),
+        #                 h5('Nexus Data Science Portfolio Dashboards.'),
+        #                 h5('For business metrics with an up-to-the-minute pulse, visit...'),
+        #                 br(),
+        #                 div(
+        #                   tags$a(href="http://nexusdatascience.com",
+        #                          "www.nexusdatascience.com",
+        #                          target = '_blank'
+        #                   )
+        #                 ),
+        #                 br(),
+        #                 br(),
+        #                 h5('BI Dashboards that put you in control!')
+        #          )
+        #
+        #   ),
+        #   box(
+        #     id = "card4",
+        #     title = h4("Top 10 States by Total Quantity"),
+        #     width = 4,
+        #     status = "primary",
+        #     closable = FALSE,
+        #     maximizable = FALSE,
+        #     collapsible = FALSE,
+        #     echarts4rOutput(ns('ot_state_quantity'))
+        #   ),
+        #   box(
+        #     id = "card4",
+        #     title = h4("Shipping Mode"),
+        #     width = 4,
+        #     status = "primary",
+        #     closable = FALSE,
+        #     maximizable = FALSE,
+        #     collapsible = FALSE,
+        #     echarts4rOutput(ns('ot_ship_mode'))
+        #   ),
+        # )
     )
   )
 }
@@ -95,8 +155,6 @@ mod_about_server <- function(
 ){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
-
-
 
     #### <<<<    gargoyle        >>>>  ####
     #-------------------------------------#

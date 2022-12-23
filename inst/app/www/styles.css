@@ -3,11 +3,11 @@
   color: white;
 }
 
-
 .aboutdescription {
   background-color: #91959c;
   padding: 10px;
   border-radius: 10px;
+  height: 250px ;
 }
 
 .aboutdescription a {
@@ -22,4 +22,11 @@
   background-color: #91959c;
   padding: 10px;
   border-radius: 10px;
+}
+
+.aboutcols {
+  background-color: #343a40;
+  height: 60px;
+  border-radius: 10px;
+  padding-top:10px;
 }

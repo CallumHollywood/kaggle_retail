@@ -55,6 +55,10 @@ app_ui <- function(request) {
           tabItem(
             tabName = "item_3",
             mod_state_ui("state_1")
+          ),
+          tabItem(
+            tabName = "item_4",
+            mod_dashdetails_ui("dashdetails_1")
           )
         )
       )
@@ -79,7 +83,7 @@ golem_add_external_resources <- function() {
       path = app_sys("app/www"),
       app_title = "Kaggle Retail Analytics"
     )
-    # Add here other external resources
-    # for example, you can add shinyalert::useShinyalert()
+
+
   )
 }
