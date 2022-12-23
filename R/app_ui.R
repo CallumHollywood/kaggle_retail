@@ -33,7 +33,12 @@ app_ui <- function(request) {
               menuItem(
                 text = "State Profile",
                 tabName = "item_3"
+              ),
+              menuItem(
+                text = "Dashboard Details",
+                tabName = "item_4"
               )
+
             )
         )
       ),
