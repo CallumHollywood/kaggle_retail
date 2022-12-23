@@ -36,6 +36,10 @@ app_server <- function(input, output, session) {
     superstore
   )
 
+  mod_dashdetails_server(
+    "dashdetails_1"
+    )
+
   #### <<<<    STATIC VALUES   >>>>  ####
   #-------------------------------------#
 

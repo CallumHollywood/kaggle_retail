@@ -16,7 +16,7 @@
 ## Dependencies ----
 ## Amend DESCRIPTION with dependencies read from package code parsing
 ## install.package('attachment') # if needed.
-attachment::att_amend_desc()
+# attachment::att_amend_desc()
 
 ## Add modules ----
 ## Create a module infrastructure in R/
@@ -33,7 +33,7 @@ golem::add_utils("helpers", with_test = TRUE)
 
 ## External resources
 ## Creates .js and .css files at inst/app/www
-# golem::add_js_file("script")
+golem::add_js_file("script")
 # golem::add_js_handler("handlers")
 golem::add_css_file("styles")
 # golem::add_sass_file("custom")
