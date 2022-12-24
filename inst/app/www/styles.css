@@ -3,11 +3,20 @@
   color: white;
 }
 
+.os-padding {
+  overflow-x: hidden;
+}
+
+.about {
+  margin: 100px;
+}
+
 .aboutdescription {
-  background-color: #91959c;
+  background-color: #007bff;
   padding: 10px;
   border-radius: 10px;
   height: 250px ;
+  color: #ffffff;
 }
 
 .aboutdescription a {
@@ -29,4 +38,33 @@
   height: 60px;
   border-radius: 10px;
   padding-top:10px;
+}
+
+.aboutcols2 {
+  background-color: #343a40;
+  height: 150px;
+  border-radius: 10px;
+  padding-top:10px;
+}
+
+.modal-dialog {
+  display: block;
+  margin-left: 0%;
+  margin-right: 0%;
+}
+
+.modal-content {
+  width: 1250px;
+}
+
+.toprow {
+  min-height: 300px;
+}
+
+.bottomrow {
+  height: 420px
+}
+
+.cls_slt_state {
+  color: #ffffff;
 }
