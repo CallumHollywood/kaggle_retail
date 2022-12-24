@@ -68,3 +68,15 @@
 .cls_slt_state {
   color: #ffffff;
 }
+
+.details_top {
+  background-color: #007bff;
+  color: #ffffff;
+  border-radius: 10px;
+}
+
+/*width: 100%;
+  margin-left: 100px;
+  margin-right: 100px;
+
+*/

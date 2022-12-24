@@ -5,7 +5,7 @@ account: callumh
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 7690290
-bundleId: 6537506
+bundleId: 6670095
 url: https://callumh.shinyapps.io/kaggle_retail/
-when: 1669017292.34699
-lastSyncTime: 1669017292.347
+when: 1671875050.93587
+lastSyncTime: 1671875050.93588
