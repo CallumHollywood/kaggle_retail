@@ -34,7 +34,7 @@ golem::add_utils("helpers", with_test = TRUE)
 ## External resources
 ## Creates .js and .css files at inst/app/www
 golem::add_js_file("script")
-# golem::add_js_handler("handlers")
+golem::add_js_handler("handlers")
 golem::add_css_file("styles")
 # golem::add_sass_file("custom")
 

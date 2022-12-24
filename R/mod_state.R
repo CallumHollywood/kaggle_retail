@@ -14,25 +14,70 @@ mod_state_ui <- function(id){
   ns <- NS(id)
   tagList(
     fluidRow(
-      column(3,
-             pickerInput(ns('slt_state'),
-                         'Select State',
-                         choices = NULL
-             )
-      ),
-      column(3,
+      column(12,
              align = 'center',
-             uiOutput(ns('ot_info_1'))
-      ),
-      column(3,
-             align = 'center',
-             uiOutput(ns('ot_info_2'))
-      ),
-      column(3,
-             align = 'center',
-             uiOutput(ns('ot_info_3'))
+             class = 'aboutcols',
+             style = ' background-color: #007bff;',
+             div(h3('State Profile', style = 'color: #ffffff;'))
       )
     ),
+    br(),
+    fluidRow(
+      column(12,
+             align = 'center',
+             class = 'aboutcols2',
+             style = ' background-color: #007bff;',
+             fluidRow(
+               column(3,
+                      br(),
+                      div(class = 'cls_slt_state',
+                          pickerInput(ns('slt_state'),
+                                      h6('Select State'
+                                         # , style = 'color: #ffffff;'
+                                      ),
+                                      choices = NULL
+                          )
+                      )
+               ),
+               column(3,
+                      align = 'center',
+                      br(),
+                      uiOutput(ns('ot_info_1'))
+               ),
+               column(3,
+                      align = 'center',
+                      br(),
+                      uiOutput(ns('ot_info_2'))
+               ),
+               column(3,
+                      align = 'center',
+                      br(),
+                      uiOutput(ns('ot_info_3'))
+               )
+             )
+      )
+    ),
+
+    # fluidRow(
+    #   column(3,
+    #          pickerInput(ns('slt_state'),
+    #                      'Select State',
+    #                      choices = NULL
+    #          )
+    #   ),
+    #   column(3,
+    #          align = 'center',
+    #          uiOutput(ns('ot_info_1'))
+    #   ),
+    #   column(3,
+    #          align = 'center',
+    #          uiOutput(ns('ot_info_2'))
+    #   ),
+    #   column(3,
+    #          align = 'center',
+    #          uiOutput(ns('ot_info_3'))
+    #   )
+    # ),
     br(),
     fluidRow(
       box(
@@ -218,7 +263,7 @@ mod_state_server <- function(
         tabName = "cardsAPI",
         title = "Total Quantity",
         value = state_quantity,
-        color = "indigo",
+        color = "primary",
         icon = icon("laptop-code"),
         width = 12
       )
@@ -240,7 +285,7 @@ mod_state_server <- function(
         tabName = "cardsAPI",
         title = "Total Sales",
         value = state_sales,
-        color = "indigo",
+        color = "primary",
         icon = icon("laptop-code"),
         width = 12
       )
@@ -262,7 +307,7 @@ mod_state_server <- function(
         tabName = "cardsAPI",
         title = "Total Profit",
         value = state_profit,
-        color = "indigo",
+        color = "primary",
         icon = icon("laptop-code"),
         width = 12
       )

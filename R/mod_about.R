@@ -17,7 +17,6 @@ mod_about_ui <- function(id){
   ns <- NS(id)
   tagList(
     div(class = 'about',
-        br(),
         fluidRow(
           column(12,
                  align = 'center',
@@ -120,27 +119,29 @@ mod_about_ui <- function(id){
         #                 h5('BI Dashboards that put you in control!')
         #          )
         #
-        #   ),
-        #   box(
-        #     id = "card4",
-        #     title = h4("Top 10 States by Total Quantity"),
-        #     width = 4,
-        #     status = "primary",
-        #     closable = FALSE,
-        #     maximizable = FALSE,
-        #     collapsible = FALSE,
-        #     echarts4rOutput(ns('ot_state_quantity'))
-        #   ),
-        #   box(
-        #     id = "card4",
-        #     title = h4("Shipping Mode"),
-        #     width = 4,
-        #     status = "primary",
-        #     closable = FALSE,
-        #     maximizable = FALSE,
-        #     collapsible = FALSE,
-        #     echarts4rOutput(ns('ot_ship_mode'))
-        #   ),
+        #   )
+        #   # ,
+        #   # box(
+        #   #   id = "card4",
+        #   #   title = h4("Top 10 States by Total Quantity"),
+        #   #   width = 4,
+        #   #   status = "primary",
+        #   #   closable = FALSE,
+        #   #   maximizable = FALSE,
+        #   #   collapsible = FALSE,
+        #   #   echarts4rOutput(ns('ot_state_quantity'))
+        #   # )
+        #   # ,
+        #   # box(
+        #   #   id = "card4",
+        #   #   title = h4("Shipping Mode"),
+        #   #   width = 4,
+        #   #   status = "primary",
+        #   #   closable = FALSE,
+        #   #   maximizable = FALSE,
+        #   #   collapsible = FALSE,
+        #   #   echarts4rOutput(ns('ot_ship_mode'))
+        #   # ),
         # )
     )
   )
@@ -167,12 +168,12 @@ mod_about_server <- function(
 
     json <- jsonlite::read_json("https://raw.githubusercontent.com/shawnbot/topogram/master/data/us-states.geojson")
 
-    count_ship_mode <- superstore %>%
-      select(ship_mode) %>%
-      group_by(ship_mode) %>%
-      mutate(count = n()) %>%
-      ungroup() %>%
-      distinct()
+    # count_ship_mode <- superstore %>%
+    #   select(ship_mode) %>%
+    #   group_by(ship_mode) %>%
+    #   mutate(count = n()) %>%
+    #   ungroup() %>%
+    #   distinct()
 
 
     #### <<<<   REACTIVES        >>>>  ####
@@ -200,32 +201,32 @@ mod_about_server <- function(
 
 
 
-    output$ot_ship_mode=renderEcharts4r({
+    # output$ot_ship_mode=renderEcharts4r({
+    #
+    #   count_ship_mode |>
+    #     e_charts(ship_mode) |>
+    #     e_pie(count, radius = c("50%", "70%")) |>
+    #     # e_title("Shipping Mode", left = "center") %>%
+    #     e_legend(bottom = 0)
+    #
+    # })
 
-      count_ship_mode |>
-        e_charts(ship_mode) |>
-        e_pie(count, radius = c("50%", "70%")) |>
-        # e_title("Shipping Mode", left = "center") %>%
-        e_legend(bottom = 0)
-
-    })
-
-    output$ot_state_quantity <- renderEcharts4r({
-
-      superstore %>%
-        group_by(state) %>%
-        transmute(quantity = sum(quantity)) %>%
-        ungroup() %>%
-        distinct() %>%
-        arrange(desc(quantity)) %>%
-        slice(1:10) %>%
-        rename(states = state) %>%
-        e_charts(states) %>%
-        e_map_register("USA", json) %>%
-        e_map(quantity , map = "USA") %>%
-        e_visual_map(quantity )
-
-    })
+    # output$ot_state_quantity <- renderEcharts4r({
+    #
+    #   superstore %>%
+    #     group_by(state) %>%
+    #     transmute(quantity = sum(quantity)) %>%
+    #     ungroup() %>%
+    #     distinct() %>%
+    #     arrange(desc(quantity)) %>%
+    #     slice(1:10) %>%
+    #     rename(states = state) %>%
+    #     e_charts(states) %>%
+    #     e_map_register("USA", json) %>%
+    #     e_map(quantity , map = "USA") %>%
+    #     e_visual_map(quantity )
+    #
+    # })
 
   })
 }

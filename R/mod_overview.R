@@ -9,89 +9,210 @@
 #' @importFrom shiny NS tagList
 #' @import reactable
 #' @import tidyr
+#' @import shinyjqui
+
 
 
 mod_overview_ui <- function(id){
   ns <- NS(id)
   tagList(
+    # bsModal(ns('boxPopUp1'), 'Big','test'),
+    # bsModal("modalExample", "Data Table", ns("btn_shipmode"), size = "large",
+    #         # dataTableOutput("distTable")
+    #         'stuff'
+    #         ),
+    # tags$head(tags$style(".modal-dialog{ width:1000px}")),
     fluidRow(
-      column(4,
-             echarts4rOutput(ns('ot_guage_quantity'))
-      ),
-      column(4,
-             echarts4rOutput(ns('ot_guage_sales'))
-      ),
-      column(4,
-             echarts4rOutput(ns('ot_guage_profit'))
+      column(12,
+             align = 'center',
+             class = 'aboutcols',
+             style = ' background-color: #007bff;',
+             div(h3('Retail Analytics Overwiew', style = 'color: #ffffff;'))
       )
     ),
     br(),
     fluidRow(
-      infoBox(
-        tabName = "cardsAPI",
-        title = h4(tags$u("Top 5 Cities - Quantity")),
-        value = tableOutput(ns('ot_top_5_quantity')),
-        color = "indigo",
-        icon = icon("bar-chart")
+      box(
+        id = "card5",
+        class = 'toprow',
+        # style = 'height: 300px',
+        title = h4("National Quantity"),
+        width = 4,
+        status = "primary",
+        closable = FALSE,
+        maximizable = FALSE,
+        collapsible = FALSE,
+        echarts4rOutput(ns('ot_guage_quantity'), height = '200px'),
+        fluidRow(
+          column(12,
+                 align = 'right',
+                 actionBttn(ns('btn_toast_01'), 'Email Report to Sales Team')
+                 )
+        )
       ),
-      infoBox(
-        tabName = "cardsAPI",
-        title = h4(tags$u("Top 5 Cities - Sales")),
-        value = tableOutput(ns('ot_top_5_sales')),
-        color = "indigo",
-        icon = icon("usd")
+
+      # column(3,
+      #
+      # ),
+      box(
+        id = "card4",
+        class = 'toprow',
+        # title = tagList(fluidRow(column(6, h4("Shipping Mode")), column(6, actionBttn(ns('btn_shipmode'), 'shipmode')))),
+        title = h4("Shipping Mode"),
+        width = 4,
+        status = "primary",
+        closable = FALSE,
+        maximizable = FALSE,
+        collapsible = FALSE,
+        fluidRow(
+          column(12,
+                 align = 'right',
+                 actionBttn(ns('btn_shipmode'), 'Sub Category Shipping Modes')
+          )
+        ),
+        echarts4rOutput(ns('ot_ship_mode'), height = '200px')
       ),
-      infoBox(
-        tabName = "cardsAPI",
-        title = h4(tags$u("Top 5 Cities - Profit")),
-        value = tableOutput(ns('ot_top_5_profit')),
-        color = "indigo",
-        icon = icon("usd")
+      # column(3,
+      # column(4,
+      box(
+        id = "card4",
+        class = 'toprow',
+        title = h4("Profit by Region & Category"),
+        width = 4,
+        status = "primary",
+        closable = FALSE,
+        maximizable = FALSE,
+        collapsible = FALSE,
+        reactableOutput(ns('ot_regional_profit'))
       )
+      # ,
+      # box(
+      #   id = "card4",
+      #   title = h4("Sub Category - % Stock Discounted"),
+      #   width = 12,
+      #   status = "primary",
+      #   closable = FALSE,
+      #   maximizable = FALSE,
+      #   collapsible = FALSE,
+      #   div(style = 'height: 350px;',
+      #       reactableOutput(ns('ot_most_discounted'))
+      #   )
+      # )
+      # )
+      # )
+      # column(4,
+      #        echarts4rOutput(ns('ot_guage_sales'))
+      # ),
+      # column(4,
+      #        echarts4rOutput(ns('ot_guage_profit'))
+      # )
     ),
     br(),
     fluidRow(
-      column(4,
-             box(
-               id = "card4",
-               title = h4("Total Profit by Region and Category"),
-               width = 12,
-               status = "primary",
-               closable = FALSE,
-               maximizable = FALSE,
-               collapsible = FALSE,
-               reactableOutput(ns('ot_regional_profit'))
-             ),
-             box(
-               id = "card4",
-               title = h4("Sub Category - % Stock Discounted"),
-               width = 12,
-               status = "primary",
-               closable = FALSE,
-               maximizable = FALSE,
-               collapsible = FALSE,
-               div(style = 'height: 350px;',
-                   reactableOutput(ns('ot_most_discounted'))
-               )
-             )
+      box(
+        id = "card4",
+        class = 'bottomrow',
+        title = h4("Top 5 Cities - Quantity"),
+        width = 4,
+        status = "primary",
+        closable = FALSE,
+        maximizable = FALSE,
+        collapsible = FALSE,
+        br(),
+        infoBox(
+          tabName = "cardsAPI",
+          title = NULL,# h4(tags$u("Top 5 Cities - Quantity")),
+          value = tableOutput(ns('ot_top_5_quantity')),
+          color = "primary",
+          width = 12,
+          icon = icon("bar-chart")
+        )
       ),
-      column(8,
-             box(
-               id = "card4",
-               height = "800px",
-               title = h4("Sub Category Shipping Modes"),
-               width = 12,
-               status = "primary",
-               closable = FALSE,
-               maximizable = FALSE,
-               collapsible = FALSE,
-               div(style = 'height: 350px;',
-                   reactableOutput(ns('ot_ship_by'))
-               )
-             )
+      box(
+        id = "card4",
+        class = 'bottomrow',
+        title = h4("Top 10 States by Total Quantity"),
+        width = 4,
+        status = "primary",
+        closable = FALSE,
+        maximizable = FALSE,
+        collapsible = FALSE,
+        echarts4rOutput(ns('ot_state_quantity'))
+      ),
+      box(
+        id = "card4",
+        class = 'bottomrow',
+        title = h4("SubCategory % Stock Discounted"),
+        width = 4,
+        status = "primary",
+        closable = FALSE,
+        maximizable = FALSE,
+        collapsible = FALSE,
+        div(style = 'height: 350px;',
+            reactableOutput(ns('ot_most_discounted'))
+        )
       )
 
+      # ,
+      # infoBox(
+      #   tabName = "cardsAPI",
+      #   title = h4(tags$u("Top 5 Cities - Sales")),
+      #   value = tableOutput(ns('ot_top_5_sales')),
+      #   color = "indigo",
+      #   icon = icon("usd")
+      # ),
+      # infoBox(
+      #   tabName = "cardsAPI",
+      #   title = h4(tags$u("Top 5 Cities - Profit")),
+      #   value = tableOutput(ns('ot_top_5_profit')),
+      #   color = "indigo",
+      #   icon = icon("usd")
+      # )
     )
+    # ,
+    # br(),
+    # fluidRow(
+    #   # column(4,
+    #   #        box(
+    #   #          id = "card4",
+    #   #          title = h4("Total Profit by Region and Category"),
+    #   #          width = 12,
+    #   #          status = "primary",
+    #   #          closable = FALSE,
+    #   #          maximizable = FALSE,
+    #   #          collapsible = FALSE,
+    #   #          reactableOutput(ns('ot_regional_profit'))
+    #   #        ),
+    #   #        box(
+    #   #          id = "card4",
+    #   #          title = h4("Sub Category - % Stock Discounted"),
+    #   #          width = 12,
+    #   #          status = "primary",
+    #   #          closable = FALSE,
+    #   #          maximizable = FALSE,
+    #   #          collapsible = FALSE,
+    #   #          div(style = 'height: 350px;',
+    #   #              reactableOutput(ns('ot_most_discounted'))
+    #   #          )
+    #   #        )
+    #   # ),
+    #   # column(8,
+    #   #        box(
+    #   #          id = "card4",
+    #   #          height = "800px",
+    #   #          title = h4("Sub Category Shipping Modes"),
+    #   #          width = 12,
+    #   #          status = "primary",
+    #   #          closable = FALSE,
+    #   #          maximizable = FALSE,
+    #   #          collapsible = FALSE,
+    #   #          div(style = 'height: 350px;',
+    #   #              reactableOutput(ns('ot_ship_by'))
+    #   #          )
+    #   #        )
+    #   # )
+    #
+    # )
   )
 }
 
@@ -111,6 +232,16 @@ mod_overview_server <- function(
 
     #### <<<<    STATIC VALUES   >>>>  ####
     #-------------------------------------#
+
+    json <- jsonlite::read_json("https://raw.githubusercontent.com/shawnbot/topogram/master/data/us-states.geojson")
+
+    count_ship_mode <- superstore %>%
+      select(ship_mode) %>%
+      group_by(ship_mode) %>%
+      mutate(count = n()) %>%
+      ungroup() %>%
+      distinct()
+
 
     ship_mode_subcat <- superstore %>%
       select(ship_mode, sub_category) %>%
@@ -140,9 +271,77 @@ mod_overview_server <- function(
     #### <<<<   OBSERVE EVENTS   >>>>  ####
     #-------------------------------------#
 
+    observeEvent(input$btn_toast_01,{
+
+      session$sendCustomMessage(
+        'doughnut_toast',
+        'Report Emailed'
+      )
+
+    })
+
+
+    observeEvent(input$btn_shipmode,{
+
+      showModal(
+        modalDialog(
+          title = "Sub Category Shipping Modes",
+          style="width:1250px;",
+          easyClose = TRUE,
+          footer = NULL,
+          # sze = 'xl',
+          # style = 'width: fit-content !important;',
+          box(
+            id = "card4",
+            height = "800px",
+            title = h4("Sub Category Shipping Modes"),
+            width = 12,
+            status = "primary",
+            closable = FALSE,
+            maximizable = FALSE,
+            collapsible = FALSE,
+            div(style = 'height: 350px;',
+                reactableOutput(ns('ot_ship_by'))
+            )
+          )
+        )
+      )
+    })
+
 
     #### <<<<    OUTPUTS         >>>>  ####
     #-------------------------------------#
+
+    output$ot_state_quantity <- renderEcharts4r({
+
+      superstore %>%
+        group_by(state) %>%
+        transmute(quantity = sum(quantity)) %>%
+        ungroup() %>%
+        distinct() %>%
+        arrange(desc(quantity)) %>%
+        slice(1:10) %>%
+        rename(states = state) %>%
+        e_charts(states) %>%
+        e_map_register("USA", json) %>%
+        e_map(quantity , map = "USA") %>%
+        e_visual_map(quantity )
+
+    })
+
+
+
+    output$ot_ship_mode=renderEcharts4r({
+
+      count_ship_mode |>
+        e_charts(ship_mode) |>
+        e_pie(count, radius = c("50%", "70%")) |>
+        e_legend(show = FALSE)
+
+    })
+
+
+
 
     output$ot_ship_by <- renderReactable({
 
@@ -225,29 +424,28 @@ mod_overview_server <- function(
     })
 
 
-    output$ot_guage_profit <- renderEcharts4r({
+    # output$ot_guage_profit <- renderEcharts4r({
+    #
+    #   e_charts() |>
+    #     e_gauge(286397, "($)", min = 0, max = 30000) |>
+    #     e_title("National Profit")
+    #
+    # })
 
-      e_charts() |>
-        e_gauge(286397, "($)", min = 0, max = 30000) |>
-        e_title("National Profit")
-
-    })
 
 
-
-    output$ot_guage_sales <- renderEcharts4r({
-
-      e_charts() |>
-        e_gauge(2297201, "($)", min = 0, max = 2500000) |>
-        e_title("National Sales")
-
-    })
+    # output$ot_guage_sales <- renderEcharts4r({
+    #
+    #   e_charts() |>
+    #     e_gauge(2297201, "($)", min = 0, max = 2500000) |>
+    #     e_title("National Sales")
+    #
+    # })
 
     output$ot_guage_quantity <- renderEcharts4r({
 
       e_charts() |>
-        e_gauge(37873, "Units", min = 0, max = 40000) |>
-        e_title("National Quantity")
+        e_gauge(37873, "Units", min = 0, max = 40000, splitNumber = 4)
 
     })
 

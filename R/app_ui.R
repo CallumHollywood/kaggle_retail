@@ -11,11 +11,17 @@ app_ui <- function(request) {
     golem_add_external_resources(),
     dashboardPage(
       header = dashboardHeader(
-        title = tagList(
-          div(class = 'centerup',
-                h2(tags$u('Retail Analytics', style = 'color: white;'))
-              )
-        )
+        disable = T
+        # title = tagList(
+        #   div(class = 'centerup',
+        #         h2(tags$u('Retail Analytics', style = 'color: white;'))
+        #       )
+        # )
+        # title = dashboardBrand(
+        #   title = 'Nexus Data Science',
+        #   color = 'primary',
+        #   href = 'http://nexusdatascience.com/'
+        # )
       ),
       sidebar = dashboardSidebar(
         div(class = 'sidebar',
@@ -82,6 +88,15 @@ golem_add_external_resources <- function() {
     bundle_resources(
       path = app_sys("app/www"),
       app_title = "Kaggle Retail Analytics"
+    ),
+    tags$link(
+      rel="stylesheet",
+      type="text/css",
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    ),
+    tags$script(
+      type="text/javascript",
+      src="https://cdn.jsdelivr.net/npm/toastify-js"
     )
 
 
